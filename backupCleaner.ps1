@@ -5,9 +5,9 @@
 
 # Settings
 $targetFolder = "C:\testStuff" # script will be confined to files contained in this folder, or its sub-folders
-$logFileFolder = "~\Desktop" # default "~\Desktop" to save to current user desktop
+$logFileFolder = "~\Desktop\backupCleanerLogs" # default "~\Desktop\backupCleanupLogs" to save to current user desktop
 $targetFileExtension = ".txt" # script will only remove files matching this extension
-$smallFileDaysToKeep = 5 
+$smallFileDaysToKeep = 7
 $largeFileThreshold = 1000000 # in bytes
 $largeFileDaysToKeep = 4
 
@@ -50,8 +50,8 @@ $afterSize = [math]::Round(($afterFiles | Measure-Object Length -s).Sum /1GB, 5)
 Add-Content -Path $logFileFolder"\"$logFileName "Found $($allFiles.count) files ( $beforeSize GB )"
 Add-Content -Path $logFileFolder"\"$logFileName "Kept $($afterFiles.count) files ( $afterSize GB )"
 Add-Content -Path $logFileFolder"\"$logFileName "Ignored $ignoredFiles non '$targetFileExtension' file(s)"
-Write-Host "Found $($allFiles.count) files ($beforeSize GB )" -BackgroundColor White -ForegroundColor Black
-Write-Host "Kept $($afterFiles.count) files ($afterSize GB )" -BackgroundColor White -ForegroundColor Black
+Write-Host "Found $($allFiles.count) files ( $beforeSize GB )" -BackgroundColor White -ForegroundColor Black
+Write-Host "Kept $($afterFiles.count) files ( $afterSize GB ) [ $($allFiles.count - $afterFiles.count - $ignoredFiles ) files removed ]" -BackgroundColor White -ForegroundColor Black
 Write-Host "Ignored $ignoredFiles non '$targetFileExtension' file(s)" -BackgroundColor White -ForegroundColor Black
 Write-Host "Log of activity saved to $logFileFolder\$logFileName"
 Write-Host ""
