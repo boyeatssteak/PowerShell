@@ -5,7 +5,7 @@
 
 # Settings
 $targetFolder = "C:\testStuff" # script will be confined to files contained in this folder, or its sub-folders
-$logFileFolder = "~\Desktop\backupCleanerLogs" # default "~\Desktop\backupCleanupLogs" to save to current user desktop
+$logFileFolder = "~\Desktop\backupCleanupLogs" # default "~\Desktop\backupCleanupLogs" to save to current user desktop
 $targetFileExtension = ".txt" # script will only remove files matching this extension
 $smallFileDaysToKeep = 7
 $largeFileThreshold = 1000000 # in bytes
@@ -15,7 +15,7 @@ $largeFileDaysToKeep = 4
 $allFiles = Get-ChildItem -Path $targetFolder -Recurse -File
 $beforeSize = [math]::Round(($allFiles | Measure-Object Length -s).Sum /1GB, 5)
 $today = Get-Date
-$logFileName = "backupCleanerLog_$($today.ToString('yyyyMMdd-HHmm')).log"
+$logFileName = "backupCleanupLog_$($today.ToString('yyyyMMdd-HHmm')).log"
 $smallFileExpiration = $today.AddDays(-$smallFileDaysToKeep)
 $largeFileExpiration = $today.AddDays(-$largeFileDaysToKeep)
 $ignoredFiles = 0
