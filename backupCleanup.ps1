@@ -4,11 +4,11 @@
 # DESC: Deletes files that meet a certain age requirement, or size and age requirement and saves a log file.
 
 # Settings
-$targetFolder = "C:\testStuff" # script will be confined to files contained in this folder, or its sub-folders
+$targetFolder = "C:\TestFiles" # script will be confined to files contained in this folder, or its sub-folders
 $logFileFolder = "~\Desktop\backupCleanupLogs" # default "~\Desktop\backupCleanupLogs" to save to current user desktop
 $targetFileExtension = ".txt" # script will only remove files matching this extension
 $smallFileDaysToKeep = 7
-$largeFileThreshold = 1000000 # in bytes
+$largeFileThreshold = 5000000 # in bytes
 $largeFileDaysToKeep = 4
 
 # Info Gathering
@@ -19,6 +19,10 @@ $logFileName = "backupCleanupLog_$($today.ToString('yyyyMMdd-HHmm')).log"
 $smallFileExpiration = $today.AddDays(-$smallFileDaysToKeep)
 $largeFileExpiration = $today.AddDays(-$largeFileDaysToKeep)
 $ignoredFiles = 0
+if(!(Test-Path $logFileFolder)) {
+  mkdir $logFileFolder
+}
+
 Add-Content -Path $logFileFolder"\"$logFileName $today
 Add-Content -Path $logFileFolder"\"$logFileName "Found $($allFiles.count) files ($beforeSize GB )"
 Write-Host "Found $($allFiles.count) files ($beforeSize GB )" -BackgroundColor White -ForegroundColor Black
