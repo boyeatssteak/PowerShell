@@ -97,10 +97,12 @@ $askSetting = {
 
 # Show Ignored Files
 Write-Host "FILES IGNORED:" -BackgroundColor Yellow -ForegroundColor Black
-Compare-Object -ReferenceObject $allFiles -DifferenceObject $ignoredFiles -IncludeEqual -Property FullName, LastWriteTime, Length, Name | where {$_.SideIndicator -eq "=="} | ForEach-Object {
-  $filesize = [math]::Round(($_.Length / 1MB), 2)
-  Add-Content -Path $logFileFullPath "IGNORED $($_.FullName) ( Mod $($_.LastWriteTime) | Size $filesize MB )"
-  Write-Host "$($_.Name) ( Mod $($_.LastWriteTime) | Size $filesize MB )" -BackgroundColor Black -ForegroundColor Yellow
+if(!($ignoredFiles.count -eq 0)) {
+  Compare-Object -ReferenceObject $allFiles -DifferenceObject $ignoredFiles -IncludeEqual -Property FullName, LastWriteTime, Length, Name | where {$_.SideIndicator -eq "=="} | ForEach-Object {
+    $filesize = [math]::Round(($_.Length / 1MB), 2)
+    Add-Content -Path $logFileFullPath "IGNORED $($_.FullName) ( Mod $($_.LastWriteTime) | Size $filesize MB )"
+    Write-Host "$($_.Name) ( Mod $($_.LastWriteTime) | Size $filesize MB )" -BackgroundColor Black -ForegroundColor Yellow
+  }
 }
 $ignoredSize = [math]::Round(($ignoredFiles | Measure-Object Length -s).Sum /1GB, 5)
 Write-Host "TOTAL: $($ignoredFiles.count) files, $ignoredSize GB" -BackgroundColor Black -ForegroundColor Yellow
