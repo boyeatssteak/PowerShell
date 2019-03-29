@@ -54,7 +54,7 @@ Write-Host ""
 $relaxedRunFiles = Get-ChildItem -Path $targetFolder -Recurse -Include $targetFileExtension -File | where LastWriteTime -lt $smallFileExpiration
 $relaxedRunSize = [math]::Round(($relaxedRunFiles | Measure-Object Length -s).Sum /1GB, 5)
 Write-Host "RELAXED:" -BackgroundColor White -ForegroundColor Black
-Write-Host "Only delete files older than $smallFileDaysToKeep days, regardless of size."
+Write-Host "Delete files older than $smallFileDaysToKeep days, regardless of size."
 Write-Host "Will remove $($relaxedRunFiles.count) files ( $relaxedRunSize GB )"
 Write-Host ""
 
